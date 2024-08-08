@@ -86,6 +86,7 @@ By following this modular and component-based approach, the Telegram Trends Dash
   "totalMembers": <number>,
   "totalMessages": <number>
 }
+```
 
 
 ### `/community/members`
@@ -100,7 +101,7 @@ By following this modular and component-based approach, the Telegram Trends Dash
   "activeMembersCount": <number>,
   "inactiveMembersCount": <number>
 }
-
+```
 ### `/community/top-contributors`
 
 **Method:** `GET`
@@ -117,7 +118,7 @@ By following this modular and component-based approach, the Telegram Trends Dash
     ...
   ]
 }
-
+```
 ### `/community/growth-rate`
 
 **Method:** `GET`
@@ -136,7 +137,7 @@ By following this modular and component-based approach, the Telegram Trends Dash
     ...
   ]
 }
-
+```
 /community/engagement-rate
 ### `/community/engagement-rate`
 
@@ -155,6 +156,7 @@ By following this modular and component-based approach, the Telegram Trends Dash
     ...
   ]
 }
+```
 
 ## Key Components
 Express.js: The application is built using Express.js for routing and handling API requests.
