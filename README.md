@@ -18,8 +18,6 @@ To run the Telegram Trends Dashboard locally, follow these steps:
     cd telegram-trends-dashboard
     cd frontend
     npm install
-    cd backend
-    npm install
     ```
 4. **Create a `.env` file with your configuration:**
     Ensure you have a `.env` file with necessary environment variables, such as database connection strings or API keys. A sample `.env` file might look like this:
@@ -72,3 +70,93 @@ The application's architecture follows a typical React component structure, with
 The data for the dashboard is currently hardcoded within the `TelegramTrendsDashboard` component. In a real-world scenario, this data would likely be fetched from an API or a database and passed down as props.
 
 By following this modular and component-based approach, the Telegram Trends Dashboard is easy to maintain, extend, and customize to fit the specific needs of your Telegram group or channel.
+
+
+## API Endpoints
+
+### `/community/summary`
+
+**Method:** `GET`
+
+**Description:** Fetches the total number of members and messages.
+
+**Response:**
+```json
+{
+  "totalMembers": <number>,
+  "totalMessages": <number>
+}
+
+
+### `/community/members`
+
+**Method:** `GET`
+
+**Description:** Retrieves the count of active and inactive members. Active members are those who have been active in the last 7 days..
+
+**Response:**
+```json
+{
+  "activeMembersCount": <number>,
+  "inactiveMembersCount": <number>
+}
+
+### `/community/top-contributors`
+
+**Method:** `GET`
+
+**Description:** Provides a list of top 5 contributors based on message count.
+**Response:**
+```json
+{
+  "topContributors": [
+    {
+      "username": "<username>",
+      "messageCount": <number>
+    },
+    ...
+  ]
+}
+
+### `/community/growth-rate`
+
+**Method:** `GET`
+
+**Description:** Shows the growth rate of new members by month, with a cumulative total.
+
+**Response:**
+```json
+{
+  "growthRate": [
+    {
+      "date": "<YYYY-MM-DD>",
+      "newMembers": <number>,
+      "totalMembers": <number>
+    },
+    ...
+  ]
+}
+
+/community/engagement-rate
+### `/community/engagement-rate`
+
+**Method:** `GET`
+
+**Description:** Provides the number of messages sent by month..
+
+**Response:**
+```json
+{
+  "engagementRate": [
+    {
+      "date": "<YYYY-MM-DD>",
+      "messages": <number>
+    },
+    ...
+  ]
+}
+
+## Key Components
+Express.js: The application is built using Express.js for routing and handling API requests.
+MongoDB: Data is stored and retrieved from MongoDB, with Mongoose used for schema modeling and queries.
+Aggregation: Aggregation pipelines are used to calculate metrics such as growth rate and engagement rate.
