@@ -1,16 +1,20 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+// const API_BASE_URL = 'http://localhost:5000/api';
+
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL
+
+console.log("BASE",import.meta.env)
+
 export interface SummaryMetrics {
     totalMembers: number;
     totalMessages: number;
-    //   activeMembersCount: number;
+   
 }
 
 export interface MemberMetrics {
     activeMembersCount: number;
-    //   activeMembers: any[];
-    //   inactiveMembers: any[];
+   
     inactiveMembersCount: number
 }
 
