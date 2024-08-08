@@ -160,3 +160,61 @@ By following this modular and component-based approach, the Telegram Trends Dash
 Express.js: The application is built using Express.js for routing and handling API requests.
 MongoDB: Data is stored and retrieved from MongoDB, with Mongoose used for schema modeling and queries.
 Aggregation: Aggregation pipelines are used to calculate metrics such as growth rate and engagement rate.
+
+
+# Dummy Data Generation Script
+
+## Overview
+
+This script is designed to populate the MongoDB database with dummy data for the Telegram Trends Dashboard application. It generates mock users and messages using the Faker.js library, which helps in testing and development by providing realistic-looking data.
+
+## Setup
+
+To use this script, you need to ensure that you have the following:
+
+1. **MongoDB Database URI:** Ensure you have a `.env` file in your project root with the MongoDB URI configured as `MONGO_URI`. The `.env` file should look like this:
+    ```
+    MONGO_URI=your-mongodb-uri
+    ```
+
+2. **Dependencies:** Install the required Node.js packages if you haven't already:
+    ```bash
+    npm install dotenv mongoose @faker-js/faker
+    ```
+
+## Script Description
+
+### `generateUsers`
+
+This function generates a specified number of mock users. Each user has the following attributes:
+- `username`: A randomly generated username.
+- `joinDate`: A date within the past year.
+- `lastActive`: A date between the `joinDate` and the current date.
+- `messageCount`: A random integer between 10 and 100.
+
+The function inserts these users into the `User` collection.
+
+### `generateMessages`
+
+This function generates a specified number of mock messages. Each message is associated with a randomly selected user from the `User` collection and has the following attributes:
+- `userId`: The ID of the user who sent the message.
+- `content`: A randomly generated sentence.
+- `timestamp`: A date between the user's `joinDate` and the current date.
+
+The function inserts these messages into the `Message` collection.
+
+### `generateMockData`
+
+This is the main function that performs the following steps:
+1. Connects to the MongoDB database using the URI specified in the `.env` file.
+2. Clears existing data from the `User` and `Message` collections.
+3. Generates and inserts 150 mock users and 3000 mock messages.
+4. Disconnects from the MongoDB database.
+
+## Running the Script
+
+To run the script and generate the dummy data, execute the following command:
+
+```bash
+node path/to/your/script.js
+
