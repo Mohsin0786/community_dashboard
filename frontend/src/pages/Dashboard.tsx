@@ -16,7 +16,7 @@ const Dashboard: React.FC = () => {
     return `${year}/${month}`;
   };
 
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label: string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-4 border rounded shadow">
@@ -112,7 +112,7 @@ const Dashboard: React.FC = () => {
   );
 };
 
-const MetricCard = ({ title, value, icon }) => (
+const MetricCard = ({ title, value, icon }: { title?: string; value?: string|number; icon?: React.ReactNode }) => (
   <Card>
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
       <CardTitle className="text-sm font-medium">{title}</CardTitle>
