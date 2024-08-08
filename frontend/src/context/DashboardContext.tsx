@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, ReactNode, FC } from 'react';
+import { createContext, useState, useEffect, ReactNode, FC } from 'react';
 import {
   fetchSummaryMetrics,
   fetchMemberMetrics,
@@ -65,7 +65,7 @@ export const DashboardProvider: FC<DashboardProviderProps> = ({ children }) => {
 
         ]);
 
-        // console.log(growthRateRes.data)
+        
        
         setSummary(summaryRes.data);
         setMembers(membersRes.data);
@@ -73,7 +73,7 @@ export const DashboardProvider: FC<DashboardProviderProps> = ({ children }) => {
         setGrowthRate(growthRateRes.data.growthRate);
         setEngagementRate(engagementRateRes.data.engagementRate);
       } catch (err:any) {
-        console.log("fetcheddd")
+      
         // Improved error handling
         if (err.response && err.response.data && err.response.data.message) {
           setError(err.response.data.message);

@@ -8,10 +8,10 @@ export interface SummaryMetrics {
 }
 
 export interface MemberMetrics {
-    activeMembersCount: Number;
+    activeMembersCount: number;
     //   activeMembers: any[];
     //   inactiveMembers: any[];
-    inactiveMembersCount: Number
+    inactiveMembersCount: number
 }
 
 export interface Contributor {

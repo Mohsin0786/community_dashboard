@@ -10,13 +10,13 @@ const Dashboard: React.FC = () => {
   const { summary, members, topContributors, growthRate, engagementRate, loading, error } = useContext(DashboardContext);
 
   console.log( topContributors,loading, error)
-  const formatDate = (dateString:String) => {
+  const formatDate = (dateString:String|undefined) => {
     if (!dateString) return '';
     const [year, month] = dateString.split('-');
     return `${year}/${month}`;
   };
 
-  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label: string }) => {
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-4 border rounded shadow">
@@ -112,7 +112,15 @@ const Dashboard: React.FC = () => {
   );
 };
 
-const MetricCard = ({ title, value, icon }: { title?: string; value?: string|number; icon?: React.ReactNode }) => (
+
+interface MetricCardProps {
+  title: string;
+  value: string | number | undefined;
+  icon: React.ReactNode;
+}
+
+
+const MetricCard: React.FC<MetricCardProps> = ({ title, value, icon }) => (
   <Card>
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
       <CardTitle className="text-sm font-medium">{title}</CardTitle>
