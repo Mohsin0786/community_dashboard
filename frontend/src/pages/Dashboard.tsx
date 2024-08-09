@@ -9,11 +9,11 @@ const Dashboard: React.FC = () => {
 
   const { summary, members, topContributors, growthRate, engagementRate, loading, error } = useContext(DashboardContext);
 
-  console.log( topContributors,loading, error)
   const formatDate = (dateString:String|undefined) => {
     if (!dateString) return '';
-    const [year, month] = dateString.split('-');
-    return `${year}/${month}`;
+    const [year, month,day] = dateString.split('-');
+  
+    return `${year}/${month}/${day}`;
   };
 
   const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {

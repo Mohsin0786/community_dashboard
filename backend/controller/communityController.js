@@ -10,10 +10,7 @@ exports.getSummary = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error fetching summary metrics' });
   }
-
 }
-
-
 
 exports.getMembers = async (req, res) => {
 
@@ -87,34 +84,86 @@ exports.getGrowthRate = async (req, res) => {
 exports.getEngagementRate = async (req, res) => {
 
   try {
+    // const engagementRate = await Message.aggregate([
+    //   {
+    //     $group: {
+    //       _id: {
+    //         year: { $year: "$timestamp" },
+    //         month: { $month: "$timestamp" }
+    //       },
+    //       count: { $sum: 1 }
+    //     }
+    //   },
+    //   { $sort: { "_id.year": 1, "_id.month": 1 } },
+    //   {
+    //     $project: {
+    //       _id: 0,
+    //       date: {
+    //         $concat: [
+    //           { $toString: { $substr: ["$_id.year", 0, 4] } }, "-",
+    //           { $toString: { $substr: ["$_id.month", 0, 2] } },
+    //           { $toString: { $substr: ["$_id.day", 0, 2] } }
+    //         ]
+    //       },
+    //       messages: "$count"
+    //     }
+    //   },
+    // ]);
+    // const engagementRate = await Message.aggregate([
+    //   {
+    //     $group: {
+    //       _id: {
+    //         year: { $year: "$timestamp" },
+    //         week: { $week: "$timestamp" }
+    //       },
+    //       count: { $sum: 1 }
+    //     }
+    //   },
+    //   { $sort: { "_id.year": 1, "_id.week": 1 } },
+    //   {
+    //     $project: {
+    //       _id: 0,
+    //       date: {
+    //         $concat: [
+    //           { $toString: { $substr: ["$_id.year", 0, 4] } }, "-W",
+    //           { $toString: "$_id.week" }
+    //         ]
+    //       },
+    //       messages: "$count"
+    //     }
+    //   },
+    // ]);
     const engagementRate = await Message.aggregate([
       {
         $group: {
           _id: {
             year: { $year: "$timestamp" },
-            month: { $month: "$timestamp" }
+            week: { $week: "$timestamp" }
           },
           count: { $sum: 1 }
         }
       },
-      { $sort: { "_id.year": 1, "_id.month": 1 } },
+      { $sort: { "_id.year": 1, "_id.week": 1 } },
       {
         $project: {
           _id: 0,
           date: {
-            $concat: [
-              { $toString: { $substr: ["$_id.year", 0, 4] } }, "-",
-              { $toString: { $substr: ["$_id.month", 0, 2] } },
-              { $toString: { $substr: ["$_id.day", 0, 2] } }
-            ]
+            $dateToString: {
+              format: "%Y-%m-%d", // Format the date as "YYYY-MM-DD"
+              date: {
+                $dateFromParts: {
+                  isoWeekYear: "$_id.year",
+                  isoWeek: "$_id.week",
+                  isoDayOfWeek: 1 // Set to 1 for the start of the week (Monday)
+                }
+              }
+            }
           },
           messages: "$count"
         }
-      },
+      }
     ]);
-
-
-
+    
     res.status(200).json({ engagementRate });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching engagement rate' });

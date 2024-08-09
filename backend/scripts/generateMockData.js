@@ -49,7 +49,7 @@ const generateMockData = async () => {
   await Message.deleteMany({});
 
   await generateUsers(150);
-  await generateMessages(3000);
+  await generateMessages(9000);
 
   mongoose.disconnect();
   console.log('Mock data generated and MongoDB disconnected.');
