@@ -7,7 +7,7 @@ import { DashboardContext } from '../context/DashboardContext';
 
 const Dashboard: React.FC = () => {
 
-  const { summary, members, topContributors, growthRate, engagementRate, loading, error } = useContext(DashboardContext);
+  const { summary, members, topContributors, growthRate, engagementRate } = useContext(DashboardContext);
 
   const formatDate = (dateString:String|undefined) => {
     if (!dateString) return '';
