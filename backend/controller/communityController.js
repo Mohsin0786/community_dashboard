@@ -50,21 +50,29 @@ exports.getGrowthRate = async (req, res) => {
           count: { $sum: 1 }
         }
       },
-      { $sort: { "_id.year": 1, "_id.month": 1 } },
+      {
+        $sort: { "_id.year": 1, "_id.month": 1 }
+      },
       {
         $project: {
           _id: 0,
           date: {
             $concat: [
-              { $toString: { $substr: ["$_id.year", 0, 4] } }, "-",
-              { $toString: { $substr: ["$_id.month", 0, 2] } },
-              { $toString: { $substr: ["$_id.day", 0, 2] } }
+              { $toString: "$_id.year" }, "-",
+              { $toString: { $substr: [{ $add: ["$_id.month", 100] }, 1, 2] } }, "-",
+              {
+                $cond: [
+                  { $eq: [{ $mod: ["$_id.month", 2] }, 0] },
+                  "30",  // Even months get 30th
+                  "29"   // Odd months get 29th
+                ]
+              }
             ]
           },
           newMembers: "$count"
         }
-      },
-
+      }
+      
     ]);
 
     let totalMembers = 0;
@@ -84,55 +92,7 @@ exports.getGrowthRate = async (req, res) => {
 exports.getEngagementRate = async (req, res) => {
 
   try {
-    // const engagementRate = await Message.aggregate([
-    //   {
-    //     $group: {
-    //       _id: {
-    //         year: { $year: "$timestamp" },
-    //         month: { $month: "$timestamp" }
-    //       },
-    //       count: { $sum: 1 }
-    //     }
-    //   },
-    //   { $sort: { "_id.year": 1, "_id.month": 1 } },
-    //   {
-    //     $project: {
-    //       _id: 0,
-    //       date: {
-    //         $concat: [
-    //           { $toString: { $substr: ["$_id.year", 0, 4] } }, "-",
-    //           { $toString: { $substr: ["$_id.month", 0, 2] } },
-    //           { $toString: { $substr: ["$_id.day", 0, 2] } }
-    //         ]
-    //       },
-    //       messages: "$count"
-    //     }
-    //   },
-    // ]);
-    // const engagementRate = await Message.aggregate([
-    //   {
-    //     $group: {
-    //       _id: {
-    //         year: { $year: "$timestamp" },
-    //         week: { $week: "$timestamp" }
-    //       },
-    //       count: { $sum: 1 }
-    //     }
-    //   },
-    //   { $sort: { "_id.year": 1, "_id.week": 1 } },
-    //   {
-    //     $project: {
-    //       _id: 0,
-    //       date: {
-    //         $concat: [
-    //           { $toString: { $substr: ["$_id.year", 0, 4] } }, "-W",
-    //           { $toString: "$_id.week" }
-    //         ]
-    //       },
-    //       messages: "$count"
-    //     }
-    //   },
-    // ]);
+  
     const engagementRate = await Message.aggregate([
       {
         $group: {
