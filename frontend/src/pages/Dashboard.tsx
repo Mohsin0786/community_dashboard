@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
   const formatDate = (dateString:String|undefined) => {
     if (!dateString) return '';
     const [year, month,day] = dateString.split('-');
-  
+    console.log(dateString)
     return `${year}/${month}/${day}`;
   };
 
